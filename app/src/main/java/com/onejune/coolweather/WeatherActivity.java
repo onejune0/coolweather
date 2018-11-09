@@ -1,6 +1,7 @@
 package com.onejune.coolweather;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.onejune.coolweather.gson.Forecast;
 import com.onejune.coolweather.gson.Weather;
+import com.onejune.coolweather.service.AutoUpdateService;
 import com.onejune.coolweather.util.HttpUtil;
 import com.onejune.coolweather.util.Utility;
 
@@ -78,8 +80,8 @@ public class WeatherActivity extends AppCompatActivity {
         swipeRefresh = findViewById(R.id.swipe_refresh);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
 
-        drawerLayout=findViewById(R.id.drawer_layout);
-        navButton=findViewById(R.id.nav_button);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navButton = findViewById(R.id.nav_button);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = preferences.getString("weather", null);
         if (weatherString != null) {
@@ -200,6 +202,9 @@ public class WeatherActivity extends AppCompatActivity {
         comfortText.setText(comfort);
         carWashText.setText(carWash);
         sportText.setText(sport);
+        weatherLayout.setVisibility(View.VISIBLE);
+        Intent intent=new Intent(this,AutoUpdateService.class);
+        startService(intent);
     }
 
     /**
@@ -229,4 +234,5 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
     }
+
 }
