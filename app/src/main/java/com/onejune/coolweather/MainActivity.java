@@ -7,6 +7,8 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.onejune.coolweather.util.SharedPreUtils;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -17,12 +19,12 @@ public class MainActivity extends AppCompatActivity {
         if(actionBar!=null){
             actionBar.hide();
         }
-
-        SharedPreferences sharedPreferences=PreferenceManager.getDefaultSharedPreferences(this);
-        if(sharedPreferences.getString("wheather",null)!=null){
+        boolean isFirst=SharedPreUtils.getBoolean(this,"isFirst",true);
+        if(isFirst){
+            SharedPreUtils.putBoolean(this,"isFirst",true);
             Intent intent=new Intent(this,WeatherActivity.class);
             startActivity(intent);
-            finish();
+            this.finish();
         }
     }
 }
